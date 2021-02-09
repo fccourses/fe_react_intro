@@ -3,38 +3,48 @@ React;
 ReactDOM;
  */
 
-class Heading extends React.Component {
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 0,
+    };
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+  }
+
+  increment() {
+    console.log(++this.state.counter); // мутация состояние - very bad
+  }
+
+  decrement() {
+    console.log(--this.state.counter);
+  }
+
   render() {
-    const { titleForHeading, classNameForHeading, children } = this.props;
-    console.log(this.props);
+    const { counter } = this.state;
     return React.createElement(
-      'h1',
-      { title: titleForHeading, className: classNameForHeading },
-      'Hello react',
-      ...children
+      React.Fragment,
+      null,
+      React.createElement('h1', null, counter),
+      React.createElement(
+        'button',
+        {
+          onClick: this.decrement,
+        },
+        '-'
+      ),
+      React.createElement(
+        'button',
+        {
+          onClick: this.increment,
+        },
+        '+'
+      )
     );
   }
 }
 
-const reactElement = React.createElement(
-  Heading,
-  {
-    titleForHeading: 'Goodbye',
-    classNameForHeading: 'heading',
-  },
-  'str1',
-  'str2',
-  'str3',
-  'str4'
-);
-
-const reactElement2 = React.createElement(
-  Heading,
-  {
-    titleForHeading: 'Hello',
-  },
-  'test1',
-  'test2'
-);
+const reactElement = React.createElement(Counter);
 
 ReactDOM.render(reactElement, document.getElementById('root'));
