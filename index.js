@@ -6,21 +6,15 @@ ReactDOM;
 class Counter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      counter: 0,
-    };
-    this.increment = this.increment.bind(this);
-    this.decrement = this.decrement.bind(this);
+    this.state = { counter: 0 };
   }
-
-  increment() {
-    console.log(++this.state.counter); // мутация состояние - very bad
-  }
-
-  decrement() {
-    console.log(--this.state.counter);
-  }
-
+  increment = () => this.setState({ counter: this.state.counter + 1 });
+  decrement = () => {
+    const { counter } = this.state;
+    if (counter > 0) {
+      this.setState({ counter: counter - 1 });
+    }
+  };
   render() {
     const { counter } = this.state;
     return React.createElement(
